@@ -11,5 +11,5 @@ int main() {
   // TODO: Uncomment the code below to pass the first stage
   std::cout << "$ ";
   std::getline(std::cin, input);
-  std::cout << input << "\n";
+  std::cout << input;
 }
