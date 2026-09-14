@@ -15,8 +15,8 @@ int main() {
   while (true)
   {
     std::cout << "$ ";  
-    std::getline(cin, line);
-    stringstream ss(line);
+    std::getline(std::cin, line);
+    std::stringstream ss(line);
     std::string word;
     ss >> word;
 
@@ -28,7 +28,7 @@ int main() {
     {
       while (ss >> word)
       {
-        cout << word;
+        std::cout << word;
       }
     }
     else {
