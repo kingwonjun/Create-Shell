@@ -9,8 +9,13 @@ int main() {
   std::string input;
 
   // TODO: Uncomment the code below to pass the first stage
-  std::cout << "$ ";
-  std::getline(std::cin, input);
-  std::cout << input;
-  std::cout << ": command not found";
+
+  while (true)
+  {
+    std::cout << "$ ";  
+    std::getline(std::cin, input);
+    std::cout << input;
+    std::cout << ": command not found";
+    std::cout << "\n";
+  }
 }
