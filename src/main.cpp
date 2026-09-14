@@ -6,6 +6,10 @@ int main() {
   std::cout << std::unitbuf;
   std::cerr << std::unitbuf;
 
+  std::string input;
+
   // TODO: Uncomment the code below to pass the first stage
   std::cout << "$ ";
+  std::getline(std::cin, input);
+  std::cout << input << "\n";
 }
