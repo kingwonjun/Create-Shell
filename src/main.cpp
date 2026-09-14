@@ -23,7 +23,7 @@ int main() {
     std::string word;
     ss >> word;
     
-    if (word == type)
+    if (word == "type")
     {
       ss >> word;
       if (word == "echo" || word == "exit" || word == "type")
