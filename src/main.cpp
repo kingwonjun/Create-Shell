@@ -1,25 +1,41 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 
 int main() {
   // Flush after every std::cout / std:cerr
   std::cout << std::unitbuf;
   std::cerr << std::unitbuf;
 
-  std::string input;
+  std::string input1;
+  std::string input2;
 
-  // TODO: Uncomment the code below to pass the first stage
+  std::string line;
 
   while (true)
   {
     std::cout << "$ ";  
-    std::getline(std::cin, input);
-    if (input == "exit")
+    std::getline(cin, line);
+    stringstream ss(line);
+    std::string word;
+    ss >> word;
+
+    if (word == "exit")
     {
       return 0;
     }
-    std::cout << input;
-    std::cout << ": command not found";
+    else if (word == "echo")
+    {
+      while (ss >> word)
+      {
+        cout << word;
+      }
+    }
+    else {
+      std::cout << word;
+      std::cout << ": command not found";
+    }
     std::cout << "\n";
   }
 }
+
