@@ -14,6 +14,10 @@ int main() {
   {
     std::cout << "$ ";  
     std::getline(std::cin, input);
+    if (input == "exit")
+    {
+      return 0;
+    }
     std::cout << input;
     std::cout << ": command not found";
     std::cout << "\n";
