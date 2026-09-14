@@ -28,8 +28,8 @@ int main() {
     {
       while (ss >> word)
       {
-        std::cout << word;
-      }
+        std::cout << word << " ";
+    }
     }
     else {
       std::cout << word;
