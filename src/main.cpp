@@ -42,6 +42,7 @@ int main() {
                     // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
                     if (entry.path().filename() == word && entry.is_regular_file() == true && access(
                             entry.path().c_str(), X_OK) == 0) {
+                        printf("entry.path = %s \n", entry.path().c_str());
                         std::cout << word << " is " << entry.path();
                         fileFound = true;
                         break;
