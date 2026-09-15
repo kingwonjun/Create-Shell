@@ -105,7 +105,7 @@ int main() {
                         // 이에 fork()라는 함수를 사용하여 프로세스 복제를 한 뒤 pid
                         // pid < 0 : fork 실패, pid == 0 : 자식 프로세스, pid > 0 부모 프로세스
                         pid_t pid = fork();
-                        if (pid == 0) {
+                        if (pid > 0) {
                             execvp(command.c_str(), argv);
                         }
                         fileFound = true;
