@@ -84,6 +84,7 @@ int main() {
                          **/
                         std::string command = entry.path().filename().string();
                         std::vector<char *> argv_vector;
+                        argv_vector.push_back(word.data());
                         while (ss >> word) {
                             argv_vector.push_back(word.data());
                         }
@@ -92,7 +93,7 @@ int main() {
                         for (int i = 0; i < argv_vector.size(); i++) {
                             argv[i] = argv_vector[i];
                         }
-                        argv[argv_vector.size() + 1] = nullptr;
+                        argv[argv_vector.size()] = nullptr;
                         //파일 실행과 인자를 넣음
                         // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
                         // data()가 조금 더 현대적이라고 한다.
