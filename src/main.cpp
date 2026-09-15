@@ -47,7 +47,7 @@ int main() {
                         std::string command;
                         std::vector<char*> argv_vector;
                         while (ss >> word) {
-                            argv_vector.push_back = word.data();
+                            argv_vector.push_back(word.data());
                         }
                         // execvp는 마지막에 종료를 알리는 nullptr이 필요해서 size() + 1을 하였다.
                         char* argv[argv_vector.size() + 1];
