@@ -61,12 +61,14 @@ int main() {
             if (fileFound == false) {
                 std::cout << word << ": not found";
             }
+            std::cout << "\n";
         } else if (word == "exit") {
             return 0;
         } else if (word == "echo") {
             while (ss >> word) {
                 std::cout << word << " ";
             }
+            std::cout << "\n";
         } else {
             // stringstream 아까 맨 위에서 ss >> word가 나와 이미 단어 하나가 지나간 상태에서
             // 인자의 개수와 인자값이 정상적으로 출력될려면
@@ -123,6 +125,5 @@ int main() {
                 break;
             }
         }
-        std::cout << "\n";
     }
 }
