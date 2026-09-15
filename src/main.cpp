@@ -107,8 +107,11 @@ int main() {
                         // pid < 0 : fork 실패, pid == 0 : 자식 프로세스, pid > 0 부모 프로세스
                         pid_t pid = fork();
                         if (pid == 0) {
-                            wait(nullptr);
                             execvp(command.c_str(), argv);
+                        }
+                        // wait(nullptr)은 부모 프로세스가 자식 프로세스 하나가 종료될 때까지 기다리게 하는 함수
+                        else if (pid > 0) {
+                            wait(nullptr);
                         }
                         fileFound = true;
                         break;
