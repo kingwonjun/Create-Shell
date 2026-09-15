@@ -92,6 +92,7 @@ int main() {
                         char *argv[argv_vector.size() + 1];
                         for (int i = 0; i < argv_vector.size(); i++) {
                             argv[i] = argv_vector[i];
+                            printf("argv[%d] = %s\n", i, argv[i]);
                         }
                         argv[argv_vector.size() - 1] = nullptr;
                         //파일 실행과 인자를 넣음
