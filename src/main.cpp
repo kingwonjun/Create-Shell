@@ -28,8 +28,10 @@ int main() {
 
         if (word == "type") {
             // word가 "type"이 들어가고 type 다음에 바로 공백이 나와서 erase로 지움
-            word.erase(0, 1);
             while (getline(ss, word, ':')) {
+                if (word[0] == ' ') {
+                    word.erase(0, 1);
+                }
                 if (word == "echo" || word == "exit" || word == "type") {
                     std::cout << word << " is a shell builtin";
                     break;
