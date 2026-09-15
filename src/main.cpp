@@ -80,6 +80,7 @@ int main() {
                         std::string command;
                         std::vector<char *> argv_vector;
                         while (ss >> word) {
+                            printf("word: %s\n", word.c_str());
                             argv_vector.push_back(word.data());
                         }
                         // execvp는 마지막에 종료를 알리는 nullptr이 필요해서 size() + 1을 하였다.
@@ -91,7 +92,7 @@ int main() {
                         //파일 실행과 인자를 넣음
                         // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
                         // data()가 조금 더 현대적이라고 한다.
-                        execvp(command.data(), argv[]);
+                        execvp(command.data(), argv);
                         fileFound = true;
                         break;
                     }
