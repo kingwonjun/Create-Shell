@@ -29,6 +29,7 @@ int main() {
 
         if (word == "type") {
             bool fileFound = false;
+            ss >> word;
             if (word == "echo" || word == "exit" || word == "type") {
                 std::cout << word << " is a shell builtin";
                 break;
