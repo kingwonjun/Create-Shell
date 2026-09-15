@@ -32,6 +32,7 @@ int main() {
                     std::cout << word << " is a shell builtin";
                     break;
                 }
+                printf("Word : %p\n", &word);
                 for (const auto &entry: fs::recursive_directory_iterator(word)) {
                     // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
                     if (entry.path().filename() == word && entry.is_regular_file() == true && access(
