@@ -111,8 +111,8 @@ int main() {
                 }
                 break;
             }
-            printf("1\n");
         }
         std::cout << "\n";
+        printf("1\n");
     }
 }
