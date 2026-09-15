@@ -111,6 +111,7 @@ int main() {
                         }
                         // wait(nullptr)은 부모 프로세스가 자식 프로세스 하나가 종료될 때까지 기다리게 하는 함수
                         else if (pid > 0) {
+                            std::cout << "\033[A";
                             wait(nullptr);
                         }
                         fileFound = true;
