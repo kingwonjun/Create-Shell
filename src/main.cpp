@@ -104,6 +104,7 @@ int main() {
                         break;
                     }
                 }
+                printf("애초에 여기까지 가나?\n");
                 if (fileFound == false){
                     std::cout << word << ": not found";
                     break;
