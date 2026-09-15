@@ -33,41 +33,9 @@ int main() {
         std::string type_path = std::getenv("PATH");
         std::istringstream pp(type_path);
         std::string path_env;
-        if (access(word.c_str(), X_OK) == 0) {
-            bool fileFound = false;
-            while (getline(pp, path_env, ':')) {
-                for (const auto &entry: fs::directory_iterator(path_env)) {
-                    // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
-                    if (entry.path().filename() == word && entry.is_regular_file() == true) {
-                        // shell에서 실행파일과 인자를 받았을 때 그 프로그램에 인자를 넣어주는 코드(가변적인 인자)
-                        /**
-                         * execvp 특성상 char *로 다 받기 때문에 vector를 사용해서 가변인자를 넣었고,
-                         * vector의 size를 세서 다시 char *argv에 넣었다.
-                         **/
-                        std::string command;
-                        std::vector<char*> argv_vector;
-                        while (ss >> word) {
-                            argv_vector.push_back(word.data());
-                        }
-                        // execvp는 마지막에 종료를 알리는 nullptr이 필요해서 size() + 1을 하였다.
-                        char* argv[argv_vector.size() + 1];
-                        for (int i = 0; i < argv_vector.size(); i++) {
-                            argv[i] = argv_vector[i];
-                        }
-                        argv[argv_vector.size()] = nullptr;
-                        //파일 실행과 인자를 넣음
-                        // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
-                        // data()가 조금 더 현대적이라고 한다.
-                        execvp(command.data(), argv);
-                        fileFound = true;
-                        break;
-                    }
-                }
-            }
-            if (fileFound == true) {
-                break;
-            }
-        } else if (word == "type") {
+        // access(word.c_str(), X_OK) == 0 첫 if문 분기에 넣었지만, path를 고려 안하였다.
+        // path에 간다음 확인을 하는 작업을 해야겠다.
+        if (word == "type") {
             bool fileFound = false;
             ss >> word;
             if (word == "echo" || word == "exit" || word == "type") {
@@ -99,6 +67,39 @@ int main() {
                 std::cout << word << " ";
             }
         } else {
+            bool fileFound = false;
+            while (getline(pp, path_env, ':')) {
+                for (const auto &entry: fs::directory_iterator(path_env)) {
+                    // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
+                    if (entry.path().filename() == word && entry.is_regular_file() == true) {
+                        // shell에서 실행파일과 인자를 받았을 때 그 프로그램에 인자를 넣어주는 코드(가변적인 인자)
+                        /**
+                         * execvp 특성상 char *로 다 받기 때문에 vector를 사용해서 가변인자를 넣었고,
+                         * vector의 size를 세서 다시 char *argv에 넣었다.
+                         **/
+                        std::string command;
+                        std::vector<char *> argv_vector;
+                        while (ss >> word) {
+                            argv_vector.push_back(word.data());
+                        }
+                        // execvp는 마지막에 종료를 알리는 nullptr이 필요해서 size() + 1을 하였다.
+                        char *argv[argv_vector.size() + 1];
+                        for (int i = 0; i < argv_vector.size(); i++) {
+                            argv[i] = argv_vector[i];
+                        }
+                        argv[argv_vector.size()] = nullptr;
+                        //파일 실행과 인자를 넣음
+                        // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
+                        // data()가 조금 더 현대적이라고 한다.
+                        execvp(command.data(), argv);
+                        fileFound = true;
+                        break;
+                    }
+                }
+            }
+            if (fileFound == true) {
+                break;
+            }
             std::cout << word;
             std::cout << ": command not found";
         }
