@@ -67,6 +67,12 @@ int main() {
                 std::cout << word << " ";
             }
         } else {
+            // stringstream 아까 맨 위에서 ss >> word가 나와 이미 단어 하나가 지나간 상태에서
+            // 인자의 개수와 인자값이 정상적으로 출력될려면
+            // stringstream을 초기화하고 처음 위치로 되돌려야한다.
+            ss.clear();
+            ss.seekg(0);
+            ss >> word;
             bool fileFound = false;
             while (getline(pp, path_env, ':')) {
                 for (const auto &entry: fs::directory_iterator(path_env)) {
