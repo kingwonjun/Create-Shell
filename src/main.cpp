@@ -120,7 +120,7 @@ int main() {
                     }
                 }
                 if (fileFound == false){
-                    std::cout << word << ": command not found";
+                    std::cout << word << ": command not found" << "\n";
                 }
                 break;
             }
