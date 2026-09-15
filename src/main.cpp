@@ -22,23 +22,23 @@ int main() {
         // 그냥 cin을 쓰면 공백을 만나면 멈추기 때문에 getline을 썼다.
         std::getline(std::cin, line);
         // 공백을 기준으로 세기 때문에 stringstream을 썼다.
+        // istringstream은 읽기용 stringstream은 쓰기용 의도가 잘 전달되게 하기위하여 구분해서 쓴다.
         std::istringstream ss(line);
         std::string word;
         ss >> word;
 
         if (word == "type") {
             bool fileFound = false;
-            // word가 "type"이 들어가고 type 다음에 바로 공백이 나와서 erase로 지움
-            while (getline(ss, word, ':')) {
-                if (word[0] == ' ') {
-                    word.erase(0, 1);
-                }
-                if (word == "echo" || word == "exit" || word == "type") {
-                    std::cout << word << " is a shell builtin";
-                    break;
-                }
-
-                for (const auto &entry: fs::directory_iterator(word)) {
+            if (word == "echo" || word == "exit" || word == "type") {
+                std::cout << word << " is a shell builtin";
+                break;
+            }
+            // 위에서 선언하지 않는다.필요한곳에 쓴다. getenv로 Path를 받아서 string으로 변환 stirng을 파싱을 하여서 각각의 path를 directory_iterator에 넣는다.
+            std::string type_path = std::getenv("PATH");
+            std::istringstream pp(type_path);
+            std::string path_env;
+            while (getline(pp, path_env, ':')) {
+                for (const auto &entry: fs::directory_iterator(path_env)) {
                     // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
                     if (entry.path().filename() == word && entry.is_regular_file() == true && access(
                             entry.path().c_str(), X_OK) == 0) {
@@ -47,18 +47,9 @@ int main() {
                         break;
                     }
                 }
-                for (const auto &entry: fs::directory_iterator(word)) {
-                    // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
-                    if (entry.path().filename() == word && entry.is_regular_file() == true && access(
-                            entry.path().c_str(), X_OK) == 0) {
-                        std::cout << word << " is " << entry.path().string();
-                        fileFound = true;
-                        break;
-                    }
-                }
-                if (fileFound == false) {
-                    std::cout << word << ": not found";
-                }
+            }
+            if (fileFound == false) {
+                std::cout << word << ": not found";
             }
         } else if (word == "exit") {
             return 0;
