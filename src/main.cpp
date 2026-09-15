@@ -48,6 +48,9 @@ int main() {
                         break;
                     }
                 }
+                if (fileFound == true) {
+                    break;
+                }
             }
             if (fileFound == false) {
                 std::cout << word << ": not found";
