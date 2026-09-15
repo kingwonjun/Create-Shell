@@ -101,8 +101,13 @@ int main() {
                         // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
                         // data()가 조금 더 현대적이라고 한다.
                         std::string command = entry.path().filename().string();
-                        fork();
-                        execvp(command.c_str(), argv);
+                        // execvp (프로그램 실행과 인자들)를 실행하면 다음 코드가 멈추게 된다.
+                        // 이에 fork()라는 함수를 사용하여 프로세스 복제를 한 뒤 pid
+                        // pid < 0 : fork 실패, pid == 0 : 자식 프로세스, pid > 0 부모 프로세스
+                        pid_t pid = fork();
+                        if (pid == 0) {
+                            execvp(command.c_str(), argv);
+                        }
                         fileFound = true;
                         break;
                     }
