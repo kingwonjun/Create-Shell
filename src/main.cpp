@@ -38,7 +38,7 @@ int main() {
                     break;
                 }
 
-                for (const auto &entry: fs::directory_iterator("/usr/bin")) {
+                for (const auto &entry: fs::directory_iterator(word)) {
                     // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
                     if (entry.path().filename() == word && entry.is_regular_file() == true && access(
                             entry.path().c_str(), X_OK) == 0) {
@@ -47,7 +47,7 @@ int main() {
                         break;
                     }
                 }
-                for (const auto &entry: fs::directory_iterator("/usr/local/bin")) {
+                for (const auto &entry: fs::directory_iterator(word)) {
                     // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
                     if (entry.path().filename() == word && entry.is_regular_file() == true && access(
                             entry.path().c_str(), X_OK) == 0) {
