@@ -70,7 +70,7 @@ int main() {
             }
             std::cout << "\n";
         } else if (word == "pwd") {
-            std::cout << fs::current_path() << "\n";
+            std::cout << fs::current_path().string() << "\n";
         }
         else {
             // stringstream 아까 맨 위에서 ss >> word가 나와 이미 단어 하나가 지나간 상태에서
