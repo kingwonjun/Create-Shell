@@ -95,7 +95,7 @@ int main() {
                         }
                         // execvp는 마지막에 종료를 알리는 nullptr이 필요해서 size() + 1을 하였다.
                         char *argv[string_argv_vector.size() + 1];
-                        for (int i = 0; i < char_argv_vector.size(); i++) {
+                        for (int i = 0; i < string_argv_vector.size(); i++) {
                             argv[i] = string_argv_vector[i].data();
                         }
                         argv[string_argv_vector.size() - 1] = nullptr;
