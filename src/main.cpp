@@ -72,7 +72,6 @@ int main() {
             // stringstream을 초기화하고 처음 위치로 되돌려야한다.
             ss.clear();
             ss.seekg(0);
-            ss >> word;
             bool fileFound = false;
             while (getline(pp, path_env, ':')) {
                 for (const auto &entry: fs::directory_iterator(path_env)) {
