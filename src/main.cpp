@@ -27,19 +27,17 @@ int main() {
         ss >> word;
 
         if (word == "type") {
-            ss >> word;
-            if (word == "echo" || word == "exit" || word == "type") {
-                std::cout << word << " is a shell builtin";
-            } else {
-                while (getline(ss, word, ':')) {
-                    printf("word : %p\n", &word);
-                    for (const auto &entry: fs::recursive_directory_iterator(word)) {
-                        // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
-                        if (entry.path().filename() == word && entry.is_regular_file() == true && access(
-                                entry.path().c_str(), X_OK) == 0) {
-                            std::cout << word << " is " << entry.path();
-                            break;
-                        }
+            while (getline(ss, word, ':')) {
+                if (word == "echo" || word == "exit" || word == "type") {
+                    std::cout << word << " is a shell builtin";
+                    break;
+                }
+                for (const auto &entry: fs::recursive_directory_iterator(word)) {
+                    // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
+                    if (entry.path().filename() == word && entry.is_regular_file() == true && access(
+                            entry.path().c_str(), X_OK) == 0) {
+                        std::cout << word << " is " << entry.path();
+                        break;
                     }
                 }
                 std::cout << word << ": not found";
