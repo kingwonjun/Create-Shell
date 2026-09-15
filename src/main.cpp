@@ -77,7 +77,7 @@ int main() {
                          * execvp 특성상 char *로 다 받기 때문에 vector를 사용해서 가변인자를 넣었고,
                          * vector의 size를 세서 다시 char *argv에 넣었다.
                          **/
-                        std::string command;
+                        std::string command = entry.path().filename().string();
                         std::vector<char *> argv_vector;
                         while (ss >> word) {
                             argv_vector.push_back(word.data());
@@ -91,8 +91,7 @@ int main() {
                         //파일 실행과 인자를 넣음
                         // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
                         // data()가 조금 더 현대적이라고 한다.
-                        printf("command:%s\n", command.data());
-                        execvp(command.data(), argv);
+                        execvp(command.c_str(), argv);
                         fileFound = true;
                         break;
                     }
