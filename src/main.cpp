@@ -2,7 +2,9 @@
 #include <string>
 #include <sstream>
 #include <filesystem>
+#include <cstdlib>
 #include <unistd.h>
+
 
 namespace fs = std::filesystem;
 
@@ -13,8 +15,8 @@ int main() {
 
     std::string input1;
     std::string input2;
-
     std::string line;
+
 
     // 쉘은 명령어를 계속 받기 때문에 while문을 돌렸다.
     while (true) {
@@ -27,7 +29,32 @@ int main() {
         std::string word;
         ss >> word;
 
-        if (word == "type") {
+        // 필요한곳에 쓴다. getenv로 Path를 받아서 string으로 변환 stirng을 파싱을 하여서 각각의 path를 directory_iterator에 넣는다.
+        std::string type_path = std::getenv("PATH");
+        std::istringstream pp(type_path);
+        std::string path_env;
+        if (access(word.c_str(), X_OK) == 0) {
+            bool fileFound = false;
+            while (getline(pp, path_env, ':')) {
+                for (const auto &entry: fs::directory_iterator(path_env)) {
+                    // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
+                    if (entry.path().filename() == word && entry.is_regular_file() == true) {
+
+                        char* args[] = {
+                            // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다.
+                            cast<char*>(ss >> word),
+
+
+                        };
+                        fileFound = true;
+                        break;
+                    }
+                }
+                if (fileFound == true) {
+                    break;
+                }
+            }
+        } else if (word == "type") {
             bool fileFound = false;
             ss >> word;
             if (word == "echo" || word == "exit" || word == "type") {
@@ -35,10 +62,6 @@ int main() {
                 std::cout << "\n";
                 continue;
             }
-            // 위에서 선언하지 않는다.필요한곳에 쓴다. getenv로 Path를 받아서 string으로 변환 stirng을 파싱을 하여서 각각의 path를 directory_iterator에 넣는다.
-            std::string type_path = std::getenv("PATH");
-            std::istringstream pp(type_path);
-            std::string path_env;
             while (getline(pp, path_env, ':')) {
                 for (const auto &entry: fs::directory_iterator(path_env)) {
                     // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
