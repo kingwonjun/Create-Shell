@@ -106,8 +106,8 @@ int main() {
                 }
                 if (fileFound == false){
                     std::cout << word << ": not found";
+                    break;
                 }
-                break;
             }
         }
         std::cout << "\n";
