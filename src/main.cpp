@@ -84,7 +84,7 @@ int main() {
                          **/
                         std::string command = entry.path().filename().string();
                         std::vector<char *> argv_vector;
-                        argv_vector.push_back(word.data());
+                        argv_vector.push_back(command.data());
                         while (ss >> word) {
                             argv_vector.push_back(word.data());
                         }
