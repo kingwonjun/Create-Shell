@@ -67,6 +67,7 @@ int main() {
                 std::cout << word << " ";
             }
         } else {
+            printf("여기서 정상작동이 될까요.\n");
             bool fileFound = false;
             while (getline(pp, path_env, ':')) {
                 for (const auto &entry: fs::directory_iterator(path_env)) {
