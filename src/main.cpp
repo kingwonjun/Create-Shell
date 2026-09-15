@@ -91,7 +91,7 @@ int main() {
                         //파일 실행과 인자를 넣음
                         // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
                         // data()가 조금 더 현대적이라고 한다.
-                        printf("command:%s\n", word.data());
+                        printf("command:%s\n", command.data());
                         execvp(command.data(), argv);
                         fileFound = true;
                         break;
