@@ -84,17 +84,19 @@ int main() {
                          **/
                         std::string command = entry.path().filename().string();
                         std::vector<char *> char_argv_vector;
-                        // std::vector<std::string> string_argv_vector;
-                        char_argv_vector.push_back(command.data());
-                        std::string string_argv;
+                        std::vector<std::string> string_argv_vector;
+                        string_argv_vector.push_back(command);
+                        // 벡터가 push_back을 통해 메모리 상의 원소들을 연속해서 보관한다면
+                        // 확보된 공간이 없을경우 다른 곳으로 이동(주소값 바뀜) 더 큰 공간으로 이사한다.
+                        // 따라서 `string_argv_vector.push_back(word) 이 한줄만 반복문에 쓰고
+                        // 다음에 string 벡터의 값들의 주소값을 넣어준다.
                         while (ss >> word) {
-                            string_argv = word;
-                            char_argv_vector.push_back(string_argv.data());
+                            string_argv_vector.push_back(word);
                         }
                         // execvp는 마지막에 종료를 알리는 nullptr이 필요해서 size() + 1을 하였다.
-                        char *argv[char_argv_vector.size() + 1];
+                        char *argv[string_argv_vector.size() + 1];
                         for (int i = 0; i < char_argv_vector.size(); i++) {
-                            argv[i] = char_argv_vector[i];
+                            argv[i] = string_argv_vector[i].data();
                         }
                         argv[char_argv_vector.size() - 1] = nullptr;
                         //파일 실행과 인자를 넣음
