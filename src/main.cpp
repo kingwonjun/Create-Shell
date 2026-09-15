@@ -27,6 +27,7 @@ int main() {
         ss >> word;
 
         if (word == "type") {
+            bool fileFound = false;
             // word가 "type"이 들어가고 type 다음에 바로 공백이 나와서 erase로 지움
             while (getline(ss, word, ':')) {
                 if (word[0] == ' ') {
@@ -42,7 +43,7 @@ int main() {
                     if (entry.path().filename() == word && entry.is_regular_file() == true && access(
                             entry.path().c_str(), X_OK) == 0) {
                         std::cout << word << " is " << entry.path();
-
+                        fileFound = true;
                         break;
                     }
                 }
@@ -51,10 +52,13 @@ int main() {
                     if (entry.path().filename() == word && entry.is_regular_file() == true && access(
                             entry.path().c_str(), X_OK) == 0) {
                         std::cout << word << " is " << entry.path();
+                        fileFound = true;
                         break;
                     }
                 }
-                std::cout << word << ": not found";
+                if (fileFound == false) {
+                    std::cout << word << ": not found";
+                }
             }
         } else if (word == "exit") {
             return 0;
