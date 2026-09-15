@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <cstdlib>
 #include <unistd.h>
-
+#include <vector>
 
 namespace fs = std::filesystem;
 
@@ -39,20 +39,27 @@ int main() {
                 for (const auto &entry: fs::directory_iterator(path_env)) {
                     // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
                     if (entry.path().filename() == word && entry.is_regular_file() == true) {
-
-                        char* args[] = {
-                            // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다.
-                            cast<char*>(ss >> word),
-
-
-                        };
+                        // shell에서 실행파일과 인자를 받았을 때 그 프로그램에 인자를 넣어주는 코드(가변적인 인자)
+                        int count = 0;
+                        int i = 0;
+                        std::string command;
+                        char* argv[];
+                        while (ss >> word) {
+                            argv[count] = word.data();
+                            count++;
+                        }
+                        argv[count] = nullptr;
+                        //파일 실행과 인자를 넣음
+                        // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
+                        // data()가 조금 더 현대적이라고 한다.
+                        execvp(command.data(), argv);
                         fileFound = true;
                         break;
                     }
                 }
-                if (fileFound == true) {
-                    break;
-                }
+            }
+            if (fileFound == true) {
+                break;
             }
         } else if (word == "type") {
             bool fileFound = false;
