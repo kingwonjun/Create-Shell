@@ -71,7 +71,7 @@ int main() {
             // 인자의 개수와 인자값이 정상적으로 출력될려면
             // stringstream을 초기화하고 처음 위치로 되돌려야한다.
             ss.clear();
-            ss.seekg(1);
+            ss.seekg(0);
             bool fileFound = false;
             while (getline(pp, path_env, ':')) {
                 for (const auto &entry: fs::directory_iterator(path_env)) {
@@ -82,10 +82,8 @@ int main() {
                          * execvp 특성상 char *로 다 받기 때문에 vector를 사용해서 가변인자를 넣었고,
                          * vector의 size를 세서 다시 char *argv에 넣었다.
                          **/
-                        std::string command = entry.path().filename().string();
                         std::vector<char *> char_argv_vector;
                         std::vector<std::string> string_argv_vector;
-                        string_argv_vector.push_back(command);
                         // 벡터가 push_back을 통해 메모리 상의 원소들을 연속해서 보관한다면
                         // 확보된 공간이 없을경우 다른 곳으로 이동(주소값 바뀜) 더 큰 공간으로 이사한다.
                         // 따라서 `string_argv_vector.push_back(word) 이 한줄만 반복문에 쓰고
@@ -102,6 +100,7 @@ int main() {
                         //파일 실행과 인자를 넣음
                         // c++ 17 이상에서는 string타입의 word가 data()를 붙이면 char* 된다. c_str()은 const char*이 되고, data()는 수정이 된다.
                         // data()가 조금 더 현대적이라고 한다.
+                        std::string command = entry.path().filename().string();
                         execvp(command.c_str(), argv);
                         fileFound = true;
                         break;
