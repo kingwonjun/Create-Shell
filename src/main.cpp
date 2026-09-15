@@ -32,6 +32,8 @@ int main() {
             ss >> word;
             if (word == "echo" || word == "exit" || word == "type") {
                 std::cout << word << " is a shell builtin";
+                std::cout << "\n";
+                continue;
             }
             // 위에서 선언하지 않는다.필요한곳에 쓴다. getenv로 Path를 받아서 string으로 변환 stirng을 파싱을 하여서 각각의 path를 directory_iterator에 넣는다.
             std::string type_path = std::getenv("PATH");
