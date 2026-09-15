@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <vector>
+#include <sys/wait.h>
 
 namespace fs = std::filesystem;
 
@@ -106,6 +107,7 @@ int main() {
                         // pid < 0 : fork 실패, pid == 0 : 자식 프로세스, pid > 0 부모 프로세스
                         pid_t pid = fork();
                         if (pid == 0) {
+                            wait(nullptr);
                             execvp(command.c_str(), argv);
                         }
                         fileFound = true;
