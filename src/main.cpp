@@ -88,11 +88,13 @@ int main() {
                         while (ss >> word) {
                             argv_vector.push_back(word.data());
                         }
+                        for (size_t i = 0; i < argv_vector.size(); i++) {
+                            printf("argv_vector[%zu] = %s\n", i, argv_vector[i]);
+                        }
                         // execvp는 마지막에 종료를 알리는 nullptr이 필요해서 size() + 1을 하였다.
                         char *argv[argv_vector.size() + 1];
                         for (int i = 0; i < argv_vector.size(); i++) {
                             argv[i] = argv_vector[i];
-                            printf("argv[%d] = %s\n", i, argv[i]);
                         }
                         argv[argv_vector.size() - 1] = nullptr;
                         //파일 실행과 인자를 넣음
