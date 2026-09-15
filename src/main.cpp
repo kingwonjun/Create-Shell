@@ -83,26 +83,18 @@ int main() {
                          * vector의 size를 세서 다시 char *argv에 넣었다.
                          **/
                         std::string command = entry.path().filename().string();
-                        std::vector<char *> argv_vector;
-                        argv_vector.push_back(command.data());
+                        std::vector<std::string> argv_vector;
+                        argv_vector.push_back(command);
                         while (ss >> word) {
                             printf("\n현재 word: %s\n", word.data());
                             printf("word.data() 주소: %p\n", (void*)word.data());
 
-                            argv_vector.push_back(word.data());
-
-                            printf("=== argv_vector ===\n");
-                            for (size_t i = 0; i < argv_vector.size(); i++) {
-                                printf("[%zu] value=%s, addr=%p\n",
-                                       i,
-                                       argv_vector[i],
-                                       (void*)argv_vector[i]);
-                            }
+                            argv_vector.push_back(word);
                         }
                         // execvp는 마지막에 종료를 알리는 nullptr이 필요해서 size() + 1을 하였다.
                         char *argv[argv_vector.size() + 1];
                         for (int i = 0; i < argv_vector.size(); i++) {
-                            argv[i] = argv_vector[i];
+                            argv[i] = argv_vector[i].data();
                         }
                         argv[argv_vector.size() - 1] = nullptr;
                         //파일 실행과 인자를 넣음
