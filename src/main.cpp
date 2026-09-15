@@ -22,7 +22,7 @@ int main() {
         // 그냥 cin을 쓰면 공백을 만나면 멈추기 때문에 getline을 썼다.
         std::getline(std::cin, line);
         // 공백을 기준으로 세기 때문에 stringstream을 썼다.
-        std::stringstream ss(line);
+        std::istringstream ss(line);
         std::string word;
         ss >> word;
 
@@ -33,7 +33,7 @@ int main() {
                     break;
                 }
                 printf("Word : %s\n", word.c_str());
-                for (const auto &entry: fs::recursive_directory_iterator(word)) {
+                for (const auto &entry: fs::directory_iterator(word)) {
                     // 파일이름이 word와 일치하고, 그냥 파일일 때 `is regular_file()`, 실행권한이 있는 파일일 때
                     if (entry.path().filename() == word && entry.is_regular_file() == true && access(
                             entry.path().c_str(), X_OK) == 0) {
