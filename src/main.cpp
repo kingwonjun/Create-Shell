@@ -102,12 +102,11 @@ int main() {
                         break;
                     }
                 }
-            }
-            if (fileFound == true) {
+                if (fileFound == false){
+                    std::cout << word << ": not found";
+                }
                 break;
             }
-            std::cout << word;
-            std::cout << ": command not found";
         }
         std::cout << "\n";
     }
