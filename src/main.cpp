@@ -73,6 +73,9 @@ int main() {
             std::cout << fs::current_path().string() << "\n";
         } else if (word == "cd") {
             ss >> word;
+            if (word[0] == '/' && chdir(word.c_str()) == -1) {
+                std::cout << "cd: " << word << ": No such file or directory\n";
+            }
         }
         else {
             // stringstream 아까 맨 위에서 ss >> word가 나와 이미 단어 하나가 지나간 상태에서
