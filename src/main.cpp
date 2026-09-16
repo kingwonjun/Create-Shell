@@ -73,7 +73,7 @@ int main() {
             std::cout << fs::current_path().string() << "\n";
         } else if (word == "cd") {
             ss >> word;
-            if (word[0] == '/' && chdir(word.c_str()) == -1) {
+            if (chdir(word.c_str()) == -1) {
                 std::cout << "cd: " << word << ": No such file or directory\n";
             }
         }
